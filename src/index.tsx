@@ -11,7 +11,6 @@ import "./others/contexts/i18n";
 import reportWebVitals from "./reportWebVitals";
 import { DictionaryContextProvider } from "./others/contexts/dictionary-context";
 import { SidebarContextProvider } from "./others/contexts/sidebar-context";
-import { AuthWrapper } from "./others/components/AuthWrapper";
 import { queryClient } from "./others/contexts/api";
 import { Donations } from "./pages/donations";
 import { NotFound } from "./pages/notFound";
