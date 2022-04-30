@@ -1,24 +1,23 @@
 name: Deploy to Prod
+
+permissions:
+  id-token: write   # Allow assume IAM Role via GitHub OIDC
+  contents: read    # This is required for actions/checkout@v2
+
 on:
   push:
     tags:
       - v*
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      S3_URL: ${{ secrets.PROD_S3_URL }}
+    environment: prod
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - uses: ukraine-taskforce/update-s3-frontend-action@v0.0.1
         with:
-          node-version: 14.x
-      - run: yarn
-      - run: yarn run build
-      - name: Set AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: ${{ secrets.DEPLOY_ROLE_ARN }}
           aws-region: eu-central-1
-      - run: yarn s3p sync -y -t $S3_URL
+          node-version: 14.x
+          role-arn: ${{ secrets.DEPLOY_ROLE_ARN }}
+          s3-bucket: ${{ secrets.S3_URL }}
