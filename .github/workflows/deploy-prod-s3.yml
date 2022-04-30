@@ -1,4 +1,4 @@
-name: Deploy to Prod S3
+name: Deploy to Prod
 on:
   push:
     tags:
@@ -8,11 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       S3_URL: ${{ secrets.PROD_S3_URL }}
-      REACT_APP_API_DOMAIN: ${{ secrets.PROD_API_URL }}
-      REACT_APP_MAPLIBRE_MAP_STYLE: ${{ secrets.MAP_STYLE }}
-      REACT_APP_REQUESTS_SOURCE: ${{ secrets.PROD_REQUESTS_SOURCE }}
-      REACT_APP_CLIENT_ID: ${{ secrets.PROD_COGNITO_CLIENT }}
-      REACT_APP_USERPOOL_ID: ${{ secrets.PROD_COGNITO_POOL }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -24,7 +19,6 @@ jobs:
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.DEPLOY_ROLE_ARN }}
           aws-region: eu-central-1
       - run: yarn s3p sync -y -t $S3_URL
