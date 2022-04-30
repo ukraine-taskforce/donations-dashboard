@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { QueryClientProvider } from "react-query";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { muiTheme } from "./styles/theme";
@@ -9,23 +8,17 @@ import { muiTheme } from "./styles/theme";
 import "./index.css";
 import "./others/contexts/i18n";
 import reportWebVitals from "./reportWebVitals";
-import { DictionaryContextProvider } from "./others/contexts/dictionary-context";
 import { SidebarContextProvider } from "./others/contexts/sidebar-context";
-import { queryClient } from "./others/contexts/api";
 import { Donations } from "./pages/donations";
 import { NotFound } from "./pages/notFound";
 import { FilterContextProvider } from "./others/contexts/filter";
 
 const Providers: React.FunctionComponent = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <MuiThemeProvider theme={muiTheme}>
-      <DictionaryContextProvider>
-        <SidebarContextProvider>
-          <FilterContextProvider>{children}</FilterContextProvider>
-        </SidebarContextProvider>
-      </DictionaryContextProvider>
-    </MuiThemeProvider>
-  </QueryClientProvider>
+  <MuiThemeProvider theme={muiTheme}>
+    <SidebarContextProvider>
+      <FilterContextProvider>{children}</FilterContextProvider>
+    </SidebarContextProvider>
+  </MuiThemeProvider>
 );
 
 ReactDOM.render(
