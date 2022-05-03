@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import MapComponent, { Popup, MapProvider, Marker } from "react-map-gl";
 
 import { Layout } from "../../others/components/Layout";
@@ -48,16 +49,17 @@ const fakeDonationPoints: DonationPoint[] = [
 ];
 
 export function Donations() {
+  const { t } = useTranslation();
   const [popupInfo, setPopupInfo] = useState<DonationPoint | null>(null);
   
   useEffect(() => {
-    document.title = "Donation drop-off points";
-  }, []);
+    document.title = t("donations_page_title");
+  }, [t]);
 
   const tableData = fakeDonationPoints.map((point: DonationPoint) => {
     return {
       name: point.name,
-      description: `${point.description}\n\nPhone number: ${point.phoneNumber}\nOpening hours: ${point.openingHours}`,
+      description: `${point.description}\n\n${t("phone_number")}: ${point.phoneNumber}\n${t("opening_hours")}: ${point.openingHours}`,
       coordinates: point.coordinates,
     };
   });
@@ -122,8 +124,8 @@ export function Donations() {
                      {popupInfo.description}
                    </pre>
                    <br/>
-                   <b>Phone number:</b> {popupInfo.phoneNumber}<br/>
-                   <b>Opening hours:</b> {popupInfo.openingHours}<br/>
+                   <b>{t("phone_number")}:</b> {popupInfo.phoneNumber}<br/>
+                   <b>{t("opening_hours")}:</b> {popupInfo.openingHours}<br/>
                 </div>
               </Popup>)}
             </MapComponent>

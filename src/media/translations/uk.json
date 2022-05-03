@@ -96,5 +96,9 @@
   "Kirovohrad Oblast": "Кіровоградська область",
   "Kyiv": "м. Київ",
   "Sevastopol": "м. Севастополь",
-  "header_add_donation_location": "Додати місце здачі пожертв"
+  "header_add_donation_location": "Додати місце здачі пожертв",
+  "header_title": "Місця здачі пожертв",
+  "donations_page_title": "Місця здачі пожертв",
+  "phone_number": "Номер телефону",
+  "opening_hours": "Години роботи"
 }
