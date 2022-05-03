@@ -4,18 +4,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useSidebarContext } from "../../contexts/sidebar-context";
+import { useSidebarContext } from "../contexts/sidebar-context";
 import styles from "./Header.module.css";
-import { ImgInfo } from "../../../media/images/UGT_Asset_UI_Info";
-import { Button } from "../Button";
-import { Modal } from "../Modal";
-import { Spacer } from "../Spacer";
-import { Text } from "../Text";
-import { ImgBrand } from "../../../media/images/UGT_Asset_Brand";
-import { ImgShare } from "../../../media/images/UGT_Asset_UI_Share";
-import { isShareSupported, useShare } from "../../helpers/share";
+import { ImgInfo } from "../../media/images/UGT_Asset_UI_Info";
+import { Button } from "./Button";
+import { Modal } from "./Modal";
+import { Spacer } from "./Spacer";
+import { Text } from "./Text";
+import { ImgBrand } from "../../media/images/UGT_Asset_Brand";
+import { ImgShare } from "../../media/images/UGT_Asset_UI_Share";
+import { isShareSupported, useShare } from "../helpers/share";
 import { useTranslation } from "react-i18next";
-import { LanguageSelector } from "../LanguageSelector";
+import { LanguageSelector } from "./LanguageSelector";
 import { Box } from "@mui/material";
 
 export const Header = () => {
@@ -40,6 +40,16 @@ export const Header = () => {
         </div>
 
         <Box sx={{ display: "flex", flexGrow: "1", alignItems: "center", marginLeft: "50px" }}>
+          <Button 
+            onClick={(e) => {
+              const w = window.open('','_blank');
+              if(!w) return;
+              w.location.href = "https://forms.gle/VYufPFio4BpCc2px7";
+              w.focus();
+              e.preventDefault();
+             }}>
+            {t("header_add_donation_location")}
+          </Button>
         </Box>
         <LanguageSelector />
       </Toolbar>
