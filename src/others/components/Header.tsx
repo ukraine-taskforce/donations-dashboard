@@ -32,7 +32,7 @@ export const Header = () => {
         </IconButton>
 
         <Typography variant="h6" component="div" mr={8}>
-          Donation drop-off points
+          {t("header_title")}
         </Typography>
 
         <div className={styles.infoIcon} onClick={() => setDisplayModal(true)}>
