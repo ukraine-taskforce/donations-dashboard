@@ -54,7 +54,7 @@ export function Donations() {
   
   useEffect(() => {
     document.title = t("donations_page_title");
-  }, []);
+  }, [t]);
 
   const tableData = fakeDonationPoints.map((point: DonationPoint) => {
     return {
