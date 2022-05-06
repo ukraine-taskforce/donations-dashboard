@@ -11,7 +11,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { CollapsibleListItem, ListItem } from "../components/CollapsibleListItemSimple";
 export interface CollapsibleTableProps extends TableContainerProps {
   rows: ListItem[];
-  renderRowData: (row: ListItem) => ListItem;
 }
 
 export interface Coordinates {
@@ -19,7 +18,7 @@ export interface Coordinates {
   longitude: number;
 }
 
-export const CollapsibleTable = ({ rows, renderRowData, ...tableProps }: CollapsibleTableProps) => {
+export const CollapsibleTable = ({ rows, ...tableProps }: CollapsibleTableProps) => {
   const { t } = useTranslation();
   const offset = 20;
   const getGirstBatch = (rows: ListItem[]) => rows.slice(0, offset);
@@ -84,11 +83,11 @@ export const CollapsibleTable = ({ rows, renderRowData, ...tableProps }: Collaps
           <TableBody sx={{ "& > *": { paddingY: 2 } }} className="collapsible-table-body">
             {displayedRows.map((row, index) => {
               // TODO: Propagate proprer id here.
-              const id = `${row.name}`;
+              const id = `${row.data.name}`;
               return (
                 <CollapsibleListItem
                   key={id}
-                  {...renderRowData(row)}
+                  {...row}
                   wrapperProps={{ paddingY: 2 }}
                   selectedCity={selectedCity}
                   toggleZoomCity={toggleZoomCity}

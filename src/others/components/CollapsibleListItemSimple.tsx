@@ -1,4 +1,5 @@
-import { useState, ReactText } from "react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Box, { BoxProps } from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -9,17 +10,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
-
+import { DonationPoint } from "../fixtures/realData";
 import { Coordinates } from "./CollapsibleList";
 
 export type ListItem = {
-  name: ReactText;
-  description: string;
+  data: DonationPoint;
   wrapperProps?: BoxProps;
-  coordinates?: {
-    latitude: number;
-    longitude: number;
-  };
 };
 
 interface CollapsibleListItemProps extends ListItem {
@@ -30,22 +26,21 @@ interface CollapsibleListItemProps extends ListItem {
 }
 
 export const CollapsibleListItem = ({
-  name,
-  description,
+  data,
   open,
   handleClick,
   wrapperProps,
-  coordinates,
   selectedCity,
   toggleZoomCity,
   ...rest
 }: CollapsibleListItemProps) => {
   const [showZoomIcon, setShowZoomIcon] = useState(false);
+  const { t } = useTranslation();
   const [zoomIcon, setZoomIcon] = useState<"zoomIn" | "zoomOut">("zoomIn");
 
   const onTableRowMouseEnter = () => {
-    if (coordinates) {
-      const { latitude, longitude } = coordinates;
+    if (data.coordinates) {
+      const { latitude, longitude } = data.coordinates;
 
       setShowZoomIcon(true);
 
@@ -75,14 +70,14 @@ export const CollapsibleListItem = ({
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {/* TODO: that should be bold */}
             <Typography variant="subtitle1" gutterBottom component="div" sx={{ margin: 0 }}>
-              {name}
+              {data.name}
             </Typography>
             {showZoomIcon && (
               <IconButton
                 color="primary"
                 aria-label="Zoom to city"
                 component="span"
-                onClick={() => toggleZoomCity(coordinates!)}
+                onClick={() => toggleZoomCity(data.coordinates!)}
                 sx={{ padding: "0 5px" }}
               >
                 {zoomIcon === "zoomOut" ? <ZoomOutIcon /> : <ZoomInIcon />}
@@ -101,7 +96,12 @@ export const CollapsibleListItem = ({
           {/* TODO: open should be in lighter gray */}
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <pre>{description}</pre>
+              {data.description}
+              <br/>
+              <b>{t("address")}</b> {data.address}<br/>
+              <b>{t("contact_name")}</b> {data.contactName}<br/>
+              <b>{t("phone_number")}</b> {data.phoneNumber}<br/>
+              <b>{t("opening_hours")}</b> {data.openingHours}
             </Box>
           </Collapse>
         </TableCell>

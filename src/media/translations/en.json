@@ -71,5 +71,7 @@
   "donations_page_title": "Donation drop-off points",
   "header_title": "Doation drop-off points",
   "phone_number": "Phone number",
-  "opening_hours": "Opening hours"
+  "opening_hours": "Opening hours",
+  "address": "Address",
+  "contact_name": "Contact name"
 }
